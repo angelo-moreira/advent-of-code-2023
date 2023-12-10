@@ -86,3 +86,32 @@
    count_ids))
 
 (day2_1 "resources/day2_1_prod.txt")
+
+(defn max_colour [sets colour]
+  (->>
+   sets
+   (map #(colour %1))
+   (apply max)))
+
+(defn max_colours [colour_sets]
+  {:blue (max_colour colour_sets :blue)
+   :red (max_colour colour_sets :red)
+   :green (max_colour colour_sets :green)})
+
+(defn power_set [sets]
+  (* (sets :red) (sets :green) (sets :blue)))
+
+(defn set_count [game_sets]
+  (->>
+   (game_sets :sets)
+   max_colours
+   power_set))
+
+(defn day2_2 [file]
+  (->>
+   (load_file file)
+   (map create_game)
+   (map set_count)
+   (apply +)))
+
+(day2_2 "resources/day2_1_prod.txt")
